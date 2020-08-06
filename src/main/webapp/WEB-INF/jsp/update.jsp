@@ -3,8 +3,8 @@
         <div class="container hero">
             <div class="row">
                 <div class="col-md-8 offset-md-2">
-                    <h1 class="text-center">Create a new Prescription<br/></h1>
-                    <form:form action="${pageContext.request.contextPath}/create" modelAttribute="prescription"   style="color: white;">
+                    <h1 class="text-center">Update Prescription<br/></h1>
+                    <form:form action="${pageContext.request.contextPath}/update" modelAttribute="prescription"   style="color: white;">
                         <div class="form-group mx-sm-3 mb-2" style="width: 650px;">
                             <label for="name" class="mr-3">Patient Name: </label>
                             <form:input path="patientName"
@@ -47,6 +47,7 @@
                                     placeholder="Next visit Date"
                             />
                         </div>
+                        <form:hidden path="prescriptionId" value = "${prescriptionId}" />
 
                         <button type="submit" class="btn btn-primary ml-3 mt-1">Create</button>
                     </form:form>

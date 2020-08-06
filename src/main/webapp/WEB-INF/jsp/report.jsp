@@ -1,8 +1,9 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="common/header.jspf" %>
         <div class="container hero">
             <div class="row">
                 <div class="col-md-8 offset-md-2">
-                    <h1 class="text-center">Prescriptions<br/></h1>
+                    <h1 class="text-center">Prescriptions count<br/></h1>
                     <table class="table mt-5" style="color: white;">
                         <thead>
                         <tr>
@@ -11,14 +12,12 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <c:forEach var="prescription" items="${prescriptionCount}">
                         <tr>
-                            <td>Bangladesh</td>
-                            <td><img src alt/></td>
+                            <td>${prescription.date}</td>
+                            <td>${prescription.prescriptionNo}</td>
                         </tr>
-                        <tr>
-                            <td>Bangladesh</td>
-                            <td><img src alt/></td>
-                        </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
