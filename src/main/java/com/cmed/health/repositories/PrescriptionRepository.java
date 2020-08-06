@@ -1,5 +1,6 @@
 package com.cmed.health.repositories;
 
+import com.cmed.health.dto.PrescriptionRest;
 import com.cmed.health.model.Prescription;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

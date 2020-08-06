@@ -2,10 +2,12 @@ package com.cmed.health.service;
 
 import com.cmed.health.dto.PrescriptionCountDto;
 import com.cmed.health.dto.PrescriptionDto;
+import com.cmed.health.dto.PrescriptionRest;
 import com.cmed.health.model.Prescription;
 import com.cmed.health.repositories.PrescriptionRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -78,6 +80,18 @@ public class PrescriptionService {
             prescriptionCountDto.setPrescriptionNo(prescriptionRepository.countByPrescriptionDate(d));
             returnValue.add(prescriptionCountDto);
         });
+        return returnValue;
+    }
+
+    public List<PrescriptionRest> getAllPrescription(){
+        List<Prescription> prescriptions = prescriptionRepository.findAll();
+        List<PrescriptionRest> returnValue = new ArrayList<>();
+        for (var p :
+                prescriptions) {
+            PrescriptionRest prescriptionRest = new PrescriptionRest();
+            BeanUtils.copyProperties(p, prescriptionRest);
+            returnValue.add(prescriptionRest);
+        }
         return returnValue;
     }
 
