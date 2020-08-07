@@ -34,7 +34,7 @@ public class PrescriptionService {
 
     public List<PrescriptionDto> showAll(String start, String end) {
         LocalDate s, e;
-        if (start.equals("null") && end.equals("null")) {
+        if (start.equals("null") || end.equals("null")) {
             e = LocalDate.now();
             s = LocalDate.now().minusDays(30);
         } else {
