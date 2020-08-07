@@ -60,4 +60,9 @@ public class PrescriptionController {
         return "report";
     }
 
+    @GetMapping("/data")
+    public String showRedtData(){
+        return "data";
+    }
+
 }
