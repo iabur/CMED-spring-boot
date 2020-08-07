@@ -3,11 +3,11 @@ package com.cmed.health.service;
 import com.cmed.health.dto.PrescriptionCountDto;
 import com.cmed.health.dto.PrescriptionDto;
 import com.cmed.health.dto.PrescriptionRest;
+import com.cmed.health.exceptions.ResourceNotFoundException;
 import com.cmed.health.model.Prescription;
 import com.cmed.health.repositories.PrescriptionRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -23,13 +23,7 @@ public class PrescriptionService {
         Prescription prescription = new Prescription();
         BeanUtils.copyProperties(prescriptionDto, prescription);
         prescription.setPrescriptionDate(LocalDate.now());
-        if(!prescriptionDto.getN_Date().isEmpty()){
-            prescription.setNextVisitDate(LocalDate.parse(prescriptionDto.getN_Date()));
-        }
-        if (prescriptionDto.getPatientAge() < 0) {
-            throw new RuntimeException("Age should be positive");
-        }
-        prescriptionRepository.save(prescription);
+        checkPatientInformation(prescriptionDto, prescription);
     }
 
     public List<PrescriptionDto> showAll(String start, String end) {
@@ -56,13 +50,25 @@ public class PrescriptionService {
         Prescription prescription = prescriptionRepository.findById(prescriptionDto.getPrescriptionId()).get();
         LocalDate prescriptionDate = prescription.getPrescriptionDate();
         BeanUtils.copyProperties(prescriptionDto, prescription);
+        checkPatientInformation(prescriptionDto, prescription);
+    }
+
+    private void checkPatientInformation(PrescriptionDto prescriptionDto, Prescription prescription) {
         if(!prescriptionDto.getN_Date().isEmpty()){
             prescription.setNextVisitDate(LocalDate.parse(prescriptionDto.getN_Date()));
         }
-
-        prescription.setPrescriptionDate(prescriptionDate);
-        if (prescriptionDto.getPatientAge() < 0) {
+        if (prescription.getPatientAge() < 0) {
             throw new RuntimeException("Age should be positive");
+        }
+        if(prescription.getPatientName().isEmpty()){
+            throw new ResourceNotFoundException("Name not found");
+        }
+        if(prescription.getDiagnosis().isEmpty()){
+            throw new ResourceNotFoundException("Diagnosis record not found");
+        }
+        if(prescription.getMedicines().isEmpty())
+        {
+            throw new ResourceNotFoundException("Medicine record not found");
         }
         prescriptionRepository.save(prescription);
     }

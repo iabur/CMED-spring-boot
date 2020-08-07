@@ -4,7 +4,8 @@
             <div class="row">
                 <div class="col-md-8 offset-md-2">
                     <h1 class="text-center">Create a new Prescription<br/></h1>
-                    <form:form action="${pageContext.request.contextPath}/create" modelAttribute="prescription"   style="color: white;">
+                    <div id="errorMessage" class="alert-danger" style="width: 650px; margin-left: 10px; margin-bottom: 10px"></div>
+                    <form:form action="${pageContext.request.contextPath}/create" modelAttribute="prescription" id="check"   style="color: white;">
                         <div class="form-group mx-sm-3 mb-2" style="width: 650px;">
                             <label for="name" class="mr-3">Patient Name: </label>
                             <form:input path="patientName"
@@ -48,9 +49,47 @@
                             />
                         </div>
 
-                        <button type="submit" class="btn btn-primary ml-3 mt-1">Create</button>
+                        <button type="submit" id="submit" class="btn btn-primary ml-3 mt-1">Create</button>
                     </form:form>
                 </div>
             </div>
         </div>
 <%@ include file="common/footer.jspf" %>
+
+<script>
+    $("#check").submit(function() {
+        var errorMassage = '';
+        var fieldMissing = '';
+        if ($('#name').val() == '') {
+            fieldMissing += '<br> Name';
+        }
+        if ($('#age').val() == '') {
+            fieldMissing += '<br> Age';
+        }
+        if ($('#Diagnosis').val() == '') {
+            fieldMissing += '<br> Diagnosis';
+        }
+        if ($('#Medicines').val() == '') {
+            fieldMissing += '<br> Medicines';
+        }
+        if (fieldMissing != '') {
+            errorMassage +=
+                '<p>The following field are missing: </p> ' + fieldMissing;
+        }
+
+        if ($.isNumeric($('#age').val()) == false) {
+            errorMassage += '<p> age not numeric </p>';
+        }
+        if ($('#age').val() < 0) {
+            errorMassage += "<p> Age can't be negative </br>";
+        }
+        if (errorMassage != '') {
+            $('#errorMessage').html(errorMassage);
+            $('#errorMessage').show();
+        }
+        if(errorMassage != ''){
+            return false;
+        }
+    });
+
+</script>

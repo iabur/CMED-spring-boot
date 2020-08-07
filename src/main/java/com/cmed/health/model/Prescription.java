@@ -21,10 +21,10 @@ public class Prescription {
     @Column(name = "patient_genger", nullable = false)
     private String patientGender;
 
-    @Column(name = "diagnosis")
+    @Column(name = "diagnosis", nullable = false)
     private String diagnosis;
 
-    @Column(name = "medicines")
+    @Column(name = "medicines", nullable = false)
     private String medicines;
 
     @Column(name = "prescription_date", nullable = false)

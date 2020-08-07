@@ -40,7 +40,7 @@
                     ></a>
                 </td>
                 <td>
-                    <a class="btn btn-danger btn-circle ml-1" href="${pageContext.request.contextPath}/delete?id=${prescription.prescriptionId}"
+                    <a onclick="return confirm(' you want to delete?')" class="btn btn-danger btn-circle ml-1" href="${pageContext.request.contextPath}/delete?id=${prescription.prescriptionId}"
                     ><i class="fas fa-trash text-white"></i
                     ></a>
                 </td>
@@ -57,4 +57,5 @@
         e.preventDefault();
         window.location = "show-all?start="+$('#from').val()+"&end="+$('#to').val();
     })
+
 </script>
